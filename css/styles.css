@@ -1,0 +1,337 @@
+/* ==========================================================================
+   Expense & Budget Visualizer — single stylesheet (Requirement 7.3)
+   Regions render top-to-bottom: Balance_Display, Input_Form,
+   Transaction_List, Pie_Chart (Requirement 7.1).
+   Fluid/responsive with no horizontal scroll or overlap from 320px–1920px
+   (Requirement 7.4). Minimum 14px text and >=4.5:1 contrast (Requirement 7.1).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Design tokens
+   Colors chosen to meet WCAG AA (>=4.5:1) against their backgrounds:
+   - --color-text #1f2933 on --color-surface #ffffff  -> ~14.8:1
+   - --color-muted #52606d on #ffffff                 -> ~7.3:1
+   - --color-danger #b42318 on #ffffff / #fef3f2      -> >=4.5:1
+   -------------------------------------------------------------------------- */
+:root {
+  --color-bg: #eef1f5;
+  --color-surface: #ffffff;
+  --color-text: #1f2933;
+  --color-muted: #52606d;
+  --color-border: #cbd2d9;
+  --color-accent: #1d4ed8;      /* white text on accent -> ~5.9:1 */
+  --color-accent-text: #ffffff;
+  --color-danger: #b42318;
+  --color-danger-bg: #fef3f2;
+  --color-danger-border: #f2b8b5;
+  --color-warning: #8a5a00;     /* on #fff8e6 -> >=4.5:1 */
+  --color-warning-bg: #fff8e6;
+  --color-warning-border: #f6d488;
+
+  --font-base: 16px;            /* >= 14px minimum */
+  --font-small: 14px;           /* smallest text used anywhere */
+  --radius: 8px;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --max-width: 720px;
+  --list-max-height: 40vh;
+}
+
+/* --------------------------------------------------------------------------
+   Base / reset
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Root font size drives rem units; keeps every rem-based size >= 14px. */
+  font-size: var(--font-base);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 1rem;              /* 16px */
+  line-height: 1.5;
+  /* Prevent horizontal scrolling across the full 320px–1920px range. */
+  overflow-x: hidden;
+}
+
+/* Never let media/embeds force horizontal scroll (Requirement 7.4). */
+img,
+canvas {
+  max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   App shell — vertical stack, fluid width, centered up to a max width.
+   Ensures top-to-bottom region order and no overlap (Requirements 7.1, 7.4).
+   -------------------------------------------------------------------------- */
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  /* Fluid gutters that shrink on very narrow screens. */
+  padding: clamp(var(--space-2), 3vw, var(--space-4));
+}
+
+/* Shared card styling for the four regions. */
+.balance-display,
+.input-form,
+.transaction-list,
+.pie-chart {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+/* Headings — kept well above the 14px minimum. */
+.balance-display__heading,
+.input-form h2,
+.transaction-list h2,
+.pie-chart h2 {
+  margin: 0 0 var(--space-2);
+  font-size: 1.125rem;          /* 18px */
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   1. Balance_Display (top-most)
+   -------------------------------------------------------------------------- */
+.balance-display {
+  text-align: center;
+}
+
+.balance-display__amount {
+  margin: 0;
+  font-size: clamp(1.75rem, 6vw, 2.5rem); /* min 28px, scales up */
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text);
+  /* Long totals wrap instead of forcing horizontal scroll. */
+  overflow-wrap: anywhere;
+}
+
+/* Range-exceeded indication (Requirement 4.5). Hidden via [hidden] by default. */
+.balance-display__warning {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-small);
+  color: var(--color-warning);
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius);
+}
+
+/* --------------------------------------------------------------------------
+   2. Input_Form
+   -------------------------------------------------------------------------- */
+#tx-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field label {
+  font-size: var(--font-small);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: var(--space-1) var(--space-2);
+  font-size: 1rem;              /* 16px — avoids mobile zoom, >= 14px */
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.field input:focus,
+.field select:focus,
+.input-form__submit:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Per-field validation error text (Requirements 1.4–1.6). Empty nodes collapse. */
+.field__error {
+  margin: 0;
+  min-height: 0;
+  font-size: var(--font-small);
+  color: var(--color-danger);
+}
+
+.field__error:empty {
+  display: none;
+}
+
+/* Highlight fields whose error node currently carries a message. */
+.field:has(.field__error:not(:empty)) input,
+.field:has(.field__error:not(:empty)) select {
+  border-color: var(--color-danger);
+}
+
+.input-form__submit {
+  align-self: flex-start;
+  padding: var(--space-1) var(--space-4);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent-text);
+  background-color: var(--color-accent);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.input-form__submit:hover {
+  filter: brightness(0.95);
+}
+
+/* --------------------------------------------------------------------------
+   3. Transaction_List — vertically scrollable (Requirement 2.2)
+   -------------------------------------------------------------------------- */
+.transaction-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Scroll vertically once content exceeds the visible area. */
+  max-height: var(--list-max-height);
+  overflow-y: auto;
+  /* Guard against any wide row causing horizontal scroll. */
+  overflow-x: hidden;
+}
+
+/* Row layout: name / amount / category + delete control, wraps gracefully. */
+.transaction-list__items > li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-small);
+}
+
+.transaction-list__items > li:last-child {
+  border-bottom: none;
+}
+
+/* Let long item names shrink/wrap rather than overflow (Requirement 7.4). */
+.transaction-list__items .tx-name {
+  flex: 1 1 8rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.transaction-list__items .tx-amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.transaction-list__items .tx-category {
+  color: var(--color-muted);
+  font-size: var(--font-small);
+}
+
+/* Delete control adjacent to each row (Requirement 3.1). */
+.transaction-list__items button {
+  padding: 0.25rem var(--space-2);
+  font-size: var(--font-small);
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.transaction-list__items button:hover {
+  filter: brightness(0.97);
+}
+
+.transaction-list__items button:focus-visible {
+  outline: 2px solid var(--color-danger);
+  outline-offset: 2px;
+}
+
+/* Empty-state message (Requirement 2.4). */
+.transaction-list__empty {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-small);
+  color: var(--color-muted);
+}
+
+/* List-level error / save-failure indication (Requirements 3.6, 6.5).
+   Hidden via [hidden] until shown by app.js. */
+.transaction-list__error {
+  margin: 0 0 var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-small);
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius);
+}
+
+/* --------------------------------------------------------------------------
+   4. Pie_Chart
+   -------------------------------------------------------------------------- */
+.pie-chart {
+  text-align: center;
+}
+
+/* Constrain the canvas so it never overflows on wide or narrow viewports. */
+.pie-chart #pie {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* No-spending-data message (Requirement 5.5). */
+.pie-chart__empty {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-small);
+  color: var(--color-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Global hidden-attribute support — ensure [hidden] wins over display rules.
+   -------------------------------------------------------------------------- */
+[hidden] {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Larger viewports — give the list more room; layout stays a single column
+   (still valid and non-overlapping up to 1920px, Requirement 7.4).
+   -------------------------------------------------------------------------- */
+@media (min-width: 700px) {
+  :root {
+    --list-max-height: 50vh;
+  }
+}

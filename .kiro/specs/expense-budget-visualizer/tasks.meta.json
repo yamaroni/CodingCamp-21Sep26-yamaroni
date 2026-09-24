@@ -1,0 +1,86 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create `index.html` structure with components in top-to-bottom order": [
+      {
+        "executionId": "a8ddd6a9-1fc3-47f7-b5ce-5565ac5d415a",
+        "chatSessionId": "sess_6053c6fa-459e-42fd-9f84-1b85bc53cf00",
+        "timestamp": 1790255517409
+      },
+      {
+        "executionId": "a8ddd6a9-1fc3-47f7-b5ce-5565ac5d415a",
+        "chatSessionId": "sess_6053c6fa-459e-42fd-9f84-1b85bc53cf00",
+        "timestamp": 1790255615207
+      }
+    ],
+    "1.2 Create `css/styles.css` (the single stylesheet)": [
+      {
+        "executionId": "e6a6431f-6a42-49f7-9ab4-1cbfda5c3d4d",
+        "chatSessionId": "sess_0e204b80-2561-4b38-8196-c71a7127e823",
+        "timestamp": 1790255649088
+      },
+      {
+        "executionId": "e6a6431f-6a42-49f7-9ab4-1cbfda5c3d4d",
+        "chatSessionId": "sess_0e204b80-2561-4b38-8196-c71a7127e823",
+        "timestamp": 1790255792548
+      }
+    ],
+    "1.3 Create `js/app.js` skeleton (the single behavior file)": [
+      {
+        "executionId": "4c9ae986-ee20-4b21-a5ae-e6096acdeedb",
+        "chatSessionId": "sess_9ee48025-2f25-4874-8c4c-da526f0331f2",
+        "timestamp": 1790255816844
+      },
+      {
+        "executionId": "4c9ae986-ee20-4b21-a5ae-e6096acdeedb",
+        "chatSessionId": "sess_9ee48025-2f25-4874-8c4c-da526f0331f2",
+        "timestamp": 1790255937169
+      }
+    ],
+    "1. Scaffold the static app shell (HTML + CSS + JS skeleton)": [
+      {
+        "executionId": "4c9ae986-ee20-4b21-a5ae-e6096acdeedb",
+        "chatSessionId": "sess_9ee48025-2f25-4874-8c4c-da526f0331f2",
+        "timestamp": 1790255937233
+      }
+    ],
+    "2.1 Add constants/config and in-memory state": [
+      {
+        "executionId": "e0c62d37-1c61-4abf-8c11-6df598fd42c2",
+        "chatSessionId": "sess_d7343d20-1600-423b-9081-734e47bf0b89",
+        "timestamp": 1790255969450
+      },
+      {
+        "executionId": "e0c62d37-1c61-4abf-8c11-6df598fd42c2",
+        "chatSessionId": "sess_d7343d20-1600-423b-9081-734e47bf0b89",
+        "timestamp": 1790256068650
+      }
+    ],
+    "2. Define constants, config, and state": [
+      {
+        "executionId": "e0c62d37-1c61-4abf-8c11-6df598fd42c2",
+        "chatSessionId": "sess_d7343d20-1600-423b-9081-734e47bf0b89",
+        "timestamp": 1790256068692
+      }
+    ],
+    "3.1 Implement `loadTransactions()` with error handling": [
+      {
+        "executionId": "08e65512-faf5-48fb-9d9d-f1b0ac123214",
+        "chatSessionId": "sess_dc7a39ab-2f49-42bb-a592-ca7bf0623e07",
+        "timestamp": 1790256100774
+      },
+      {
+        "executionId": "08e65512-faf5-48fb-9d9d-f1b0ac123214",
+        "chatSessionId": "sess_dc7a39ab-2f49-42bb-a592-ca7bf0623e07",
+        "timestamp": 1790256208233
+      }
+    ],
+    "3.2 Implement `saveTransactions(transactions)` with error handling": [
+      {
+        "executionId": "39b59be5-f12b-4569-aa2a-d692ce95d5ae",
+        "chatSessionId": "sess_c297ad46-ddba-436e-967f-e3363188235f",
+        "timestamp": 1790256258181
+      }
+    ]
+  }
+}
